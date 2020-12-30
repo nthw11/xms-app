@@ -51,8 +51,12 @@ function SinglePost(props) {
   } else {
     const {
       id,
+      title,
       body,
-      createdAt,
+      rating,
+      // tags,
+      posterImg,
+      // createdAt,
       username,
       comments,
       likes,
@@ -63,17 +67,16 @@ function SinglePost(props) {
       <Grid>
         <Grid.Row>
           <Grid.Column width={2}>
-            <Image
-              src='https://react.semantic-ui.com/images/avatar/large/molly.png'
-              size='small'
-              float='right'
-            />
+            <Image src={posterImg} size='small' float='right' />
           </Grid.Column>
           <Grid.Column width={10}>
             <Card fluid>
               <Card.Content>
-                <Card.Header>{username}</Card.Header>
-                <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
+                <Card.Header>{title}</Card.Header>
+                <Card.Meta>
+                  {rating}
+                  {/* {moment(createdAt).fromNow()} */}
+                </Card.Meta>
                 <Card.Description>{body}</Card.Description>
               </Card.Content>
               <hr />
@@ -164,7 +167,10 @@ const FETCH_POST_QUERY = gql`
   query($postId: ID!) {
     getPost(postId: $postId) {
       id
+      title
       body
+      posterImg
+      rating
       createdAt
       username
       likeCount

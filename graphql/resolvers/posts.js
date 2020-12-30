@@ -27,15 +27,22 @@ module.exports = {
     },
   },
   Mutation: {
-    async createPost(_, { body }, context) {
+    async createPost(_, { title, body, rating, posterImg }, context) {
       const user = checkAuth(context);
 
-      if (body.trim() === '') {
-        throw new Error('Post body must not be empty');
-      }
+      // if (title.trim() === '' || body.trim() === '') {
+      //   throw new Error('Field must not be empty');
+      // } else {
+      // if (body.trim() === '') {
+      //   throw new Error('Description must not be empty');
+      // }
 
       const newPost = new Post({
+        title,
         body,
+        rating,
+
+        posterImg,
         user: user.id,
         username: user.username,
         createdAt: new Date().toISOString(),
@@ -80,11 +87,6 @@ module.exports = {
         await post.save();
         return post;
       } else throw new UserInputError('post not found');
-    },
-  },
-  Subscription: {
-    newPost: {
-      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_POST'),
     },
   },
 };

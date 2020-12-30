@@ -1,14 +1,13 @@
 {
-  "name": "MERNG-social-app",
+  "name": "xms-app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "serve": "node index",
     "start": "nodemon index"
   },
   "keywords": [],
-  "author": "",
+  "author": "nthw",
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.19.0",
@@ -22,5 +21,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nthw11/xms-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nthw11/xms-app/issues"
+  },
+  "homepage": "https://github.com/nthw11/xms-app#readme",
+  "description": ""
 }

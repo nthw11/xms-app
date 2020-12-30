@@ -4,7 +4,10 @@ export const FETCH_POSTS_QUERY = gql`
   {
     getPosts {
       id
+      title
       body
+      rating
+      posterImg
       createdAt
       username
       likeCount

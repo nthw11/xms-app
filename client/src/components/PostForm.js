@@ -1,45 +1,89 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Button, Form, Image } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 
 import { useForm } from '../util/hooks';
 import { FETCH_POSTS_QUERY } from '../util/graphql';
 
-function PostForm() {
+// const genericPoster = () => <Image src='../../public/img/genposter.png' />;
+
+function PostForm(props) {
   const { values, onChange, onSubmit } = useForm(createPostCallback, {
+    title: '',
     body: '',
+    rating: '',
+    // tags: '',
+    posterImg: '',
   });
 
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
     variables: values,
     update(proxy, result) {
       const data = proxy.readQuery({ query: FETCH_POSTS_QUERY });
+
       proxy.writeQuery({
         query: FETCH_POSTS_QUERY,
         data: { getPosts: [result.data.createPost, ...data.getPosts] },
       });
+      values.title = '';
       values.body = '';
+      values.rating = '';
+      // values.tags = '';
+      values.posterImg = '';
+      values.posterImg = '';
     },
+
     onError(err) {
-      //console.log(err)
+      console.log(err + 'PostForm ln 33');
     },
   });
 
   function createPostCallback() {
     createPost();
+    console.log('post createdd');
   }
 
   return (
     <>
       <Form onSubmit={onSubmit}>
-        <h2>Create a post:</h2>
+        <h2>Enter a film:</h2>
         <Form.Field>
           <Form.Input
-            placeholder='write your post here'
+            placeholder='Title'
+            name='title'
+            onChange={onChange}
+            value={values.title}
+            error={error ? true : false}
+          />
+          <Form.Input
+            placeholder='Description'
             name='body'
             onChange={onChange}
             value={values.body}
+            error={error ? true : false}
+          />
+          <Form.Input
+            placeholder='Rating'
+            name='rating'
+            onChange={onChange}
+            value={values.rating}
+            error={error ? true : false}
+          />
+          {/* <Form.Input
+            placeholder='Tags'
+            name='tags'
+            onChange={onChange}
+            value={values.tags}
+            error={error ? true : false}
+          /> */}
+          <Form.Input
+            placeholder='poster url (optional)'
+            name='posterImg'
+            onChange={onChange}
+            value={values.posterImg}
             error={error ? true : false}
           />
           <Button type='submit' color='teal'>
@@ -47,22 +91,38 @@ function PostForm() {
           </Button>
         </Form.Field>
       </Form>
-      {error && (
+      {/* {error && (
         <div className='ui error message' style={{ marginBottom: 20 }}>
           <ul className='list'>
             <li>{error.graphQLErrors[0].message}</li>
           </ul>
         </div>
-      )}
+      )} */}
     </>
   );
 }
 
 const CREATE_POST_MUTATION = gql`
-  mutation createPost($body: String!) {
-    createPost(body: $body) {
+  mutation createPost(
+    $title: String!
+    $body: String!
+    $rating: String!
+    # $tags: String!
+    $posterImg: String!
+  ) {
+    createPost(
+      title: $title
+      body: $body
+      rating: $rating
+      # tags: $tags
+      posterImg: $posterImg
+    ) {
       id
+      title
       body
+      rating
+      # tags
+      posterImg
       createdAt
       username
       likes {
