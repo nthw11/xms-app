@@ -4,7 +4,7 @@ import { AuthContext } from '../context/auth';
 import { Grid } from 'semantic-ui-react';
 import PostForm from '../components/PostForm';
 
-function AddMovie() {
+function AddMovie(props) {
   const { user } = useContext(AuthContext);
 
   return (

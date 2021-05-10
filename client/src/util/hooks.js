@@ -11,10 +11,15 @@ export const useForm = (callback, initialState = {}) => {
     event.preventDefault();
     callback();
   };
+  const onSubmitMovie = (event) => {
+    event.preventDefault();
+    this.props.history.push('/');
+  };
 
   return {
     onChange,
     onSubmit,
     values,
+    onSubmitMovie,
   };
 };

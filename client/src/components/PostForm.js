@@ -11,7 +11,7 @@ import { FETCH_POSTS_QUERY } from '../util/graphql';
 // const genericPoster = () => <Image src='../../public/img/genposter.png' />;
 
 function PostForm(props) {
-  const { values, onChange, onSubmit } = useForm(createPostCallback, {
+  const { values, onChange, onSubmitMovie } = useForm(createPostCallback, {
     title: '',
     body: '',
     rating: '',
@@ -48,7 +48,7 @@ function PostForm(props) {
 
   return (
     <>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmitMovie={this.onSubmitMovie.bind(this)}>
         <h2>Enter a film:</h2>
         <Form.Field>
           <Form.Input
